@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat Animasi - Alan & Wilya</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111b21;
+      margin: 0;
+      padding: 20px;
+      color: #fff;
+    }
+    .chat-box {
+      max-width: 600px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .msg-wrapper {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .msg {
+      padding: 10px 14px;
+      border-radius: 7px;
+      max-width: 80%;
+      width: fit-content;
+      animation: fadeIn 0.4s ease forwards;
+      opacity: 0;
+    }
+    .left .msg {
+      background-color: #202c33;
+      align-self: flex-start;
+    }
+    .right .msg {
+      background-color: #005c4b;
+      align-self: flex-end;
+    }
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .left {
+      flex-direction: row;
+      align-self: flex-start;
+    }
+    .right {
+      flex-direction: row-reverse;
+      align-self: flex-end;
+    }
+    .sender-name {
+      font-size: 0.75rem;
+      margin-bottom: 2px;
+      color: #ccc;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(10px); }
+    }
+    audio {
+      display: block;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <iframe src="https://open.spotify.com/embed/track/2TNPPV5zmmyHHq4jIjdoN2" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+  <div class="chat-box" id="chatBox"></div>
+
+  <script>
+    const chatScript = [ 
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'karenaa pikirann akuu' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'akuu yang baru kecapean kadang kepikiran yang engga engga' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'ketikaa kamu bacaa atau bales wa aku, entah singkat atauu apapunn aja itu aku dah seneng bangettt' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'akuu apresiasi bangett ke semuaaa kebaikan yang ditujuin ke akuuu' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'karenaa aku fokus ke 1 kebaikannn, dan semuaa kekurangan bisaa hilang gituu' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'buatt aku yang minder dan cemburuann, aku selalu butuh pelukkk' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'kalauu bolehh, ntar pelukk tiap harii' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'tapii kalau ga dapet kesempatan itu juga gapapaaa' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'siapapunnn cowoo yang bareng samaa kamuu nantii, dia beruntung bangett' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'dannn kalau disini aku cuma ditakdirkan buat nemenin kamu, akuuu beruntung bangettt bisa kenal kamuu' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'akuu bangga bisa kenal kamuu' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'akuu bersyukur bisaa kenal sama kamuuu' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'akuu apresiasi setiap kebaikann yang kamu lakuin ke akuuu' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'dan kamuu sama sekali ga pernah ngecewain akuu' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'sekalipun gaa pernahhh' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'akuu bangga bisaa sama kamuu, aku senenggggggggg BANGETTT' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'akuu harap dulu kita kenal lebih awal, yaa' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'SENENGGG BANGETTTT BISA DIBERI KESEMPATAN CHAT SAMAA KAMUUU' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'yang dulunyaaaaa excited bangettt' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'sampeee akhirnya dry text aksjahshshahshhshaa' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'tapiii its okeeyyyyyy' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'adaaa waktunyaa' },
+    { side: 'left', name: 'Alan', avatar: 'ppalan.png', text: 'dannn kamuu mungkin baru kecapeann' },
+    { side: 'right', name: 'Wilya', avatar: 'ppwilya.jpg',text: 'ya amppunnn maaf yaaa kalo aku keliatan dry text akhir2 inii 🥲 aku sumpahhh nggak bermaksud ngasih kesan kayak gituu, kadang akuuu juga bingung harus bales gimana biar gak ngebosenin...' },
+    { side: 'right', name: 'Wilya', avatar: 'ppwilya.jpg',text: 'tapi pas bacaa chat kamu tuh rasanya campur adukkk aku ngerasa disayang, dikhawatiirn, dipeluk lewat kata2...' },
+    { side: 'right', name: 'Wilya', avatar: 'ppwilya.jpg',text: 'terus aku malah balesnya singkat huhuhuuu maafff yaaaaa alannnnn' },
+    { side: 'right', name: 'Wilya', avatar: 'ppwilya.jpg',text: 'aku janji deh bakalan lebih ngejaga cara aku bales kamuuu...' },
+    { side: 'right', name: 'Wilya', avatar: 'ppwilya.jpg',text: 'karena kamu tuh bukan sekadar orang yang aku chattt, tapii kamu tuh orang yang aku sayangg, yang aku tunggu tiap harii, yang selalu aku pengen bahagiain' },
+    { side: 'right', name: 'Wilya', avatar: 'ppwilya.jpg',text: 'makasih ya udah sabar sama aku, walau aku kadang kayak dingin atau ga antusias, padahal di dalem hati aku tuh… seneng banget bisa chat sama kamu, bisa jadi orang yang kamu butuhin aku seneng bangettt bisa punya kamu, mas alan' },
+    { side: 'right', name: 'Wilya', avatar: 'ppwilya.jpg',text: 'yang selalu bikin aku ngerasa dicintai dan dihargai 🥹' },
+    { side: 'right', name: 'Wilya', avatar: 'ppwilya.jpg',text: 'jadi makasih yaa, udah tetep ada, udah gak nyerah walau aku kadang ga bisa bales sehangat yang kamu kasih aku' },
+    { side: 'right', name: 'Wilya', avatar: 'ppwilya.jpg',text: 'beruntung banget, bener-bener beruntung bisa kenal kamu, bisa deket sama kamu, bisa jatuh hati ke kamu' },
+    ];
+
+   
+    const chatBox = document.getElementById('chatBox');
+    
+    let i = 0;
+    let lastSender = '';
+
+    function showNext() {
+      if (i >= chatScript.length) return;
+
+      const { side, name, avatar, text } = chatScript[i];
+
+      const wrapper = document.createElement('div');
+      wrapper.className = `msg-wrapper ${side}`;
+
+      // Tambahkan nama pengirim jika berganti
+      if (name !== lastSender) {
+        const senderLabel = document.createElement('div');
+        senderLabel.className = 'sender-name';
+        senderLabel.textContent = name;
+        senderLabel.style.textAlign = side === 'right' ? 'right' : 'left';
+        chatBox.appendChild(senderLabel);
+        lastSender = name;
+      }
+
+      const bubble = document.createElement('div');
+      bubble.className = 'msg';
+      bubble.textContent = text;
+
+      const img = document.createElement('img');
+      img.className = 'avatar';
+      img.src = avatar;
+
+      wrapper.appendChild(img);
+      wrapper.appendChild(bubble);
+      chatBox.appendChild(wrapper);
+
+      i++;
+      setTimeout(showNext, 1600);
+    }
+
+    showNext();
+  </script>
+</body>
+</html>
